@@ -1,21 +1,182 @@
 # 更新记录
 
-- 大版本号 固定
+- 大版本号 项目重大内容变化，导致教程内容与旧版本不兼容
 - 中版本号 项目添加
 - 小版本号 项目调整(随中版本号添加归零)
 
-2020/12/8 v1.32.3
+2023/2/25 Ver2.38.4
 
+- 修复项目32的报错问题
+- 处理Transform获取欧拉角时的死锁问题
+- EffectHelper类少量调整
+
+2022/9/3 Ver2.38.3
+
+- 调整d3dFormat.h
+
+2022/6/29 Ver2.38.2
+
+- TextureManager读取方法修改为CreateFromFile/Memory 
+- TextureManager添加1x1白纹理，用于替代19章开始的shader判空操作 
+- 修改shader中部分变量名，删除38-39多余函数 
+- 修复37章Forward+解绑问题 
+- sponza和powerplant模型格式从.obj转为.gltf 
+- 添加sponzaPBR模型 
+- 修改assimp读取部分，去除点、线图元
+- 添加ImGuiLog类，但暂不实装
+
+2022/6/24 Ver2.38.1
+
+- 修复ImGui使用过时方式的键盘事件监测
+- 将剩余tab替换成空格
+
+**2022/6/23 Ver2.38.0**
+
+- **第6章项目替换为Use ImGui，原项目Mouse and Keyboard归档到Project Archive**
+
+**2022/6/23 Ver2.37.0**
+
+- 第9章使用ImGui，从第9章起的项目全面使用ImGui并丢弃Direct2D/DWrite
+- 替换带后缀11的DDS/WICTextureLoader和ScreenGrab
+- 删除VS项目，现在用户需要使用cmake生成
+- 添加VS项目自动生成检查
+- HLSL代码统一使用UTF-8 NO BOM（带BOM会导致编译出错，尽管fxc要求ansi编码）
+- 添加命令行快速生成项目并编译
+
+**19章起的改动**
+
+- 代码重新分类为三个文件夹，且19章开始使用统一的**Common**项目来避免重复
+- **统一使用Assimp加载模型**
+- 使用`ModelManager`和`TextureManager`管理资源，避免重复创建资源
+- **需要使用C++17**
+- **back buffer默认使用sRGB格式**，因此不能直接copy渲染结果到交换链，而是要以render的方式写入
+- **统一使用EffectHelper**，基于IEffect继承来管理特效资源，承接模型材质和几何数据
+- 使用Material存储材质信息、MeshData管理存储在GPU的模型信息
+- 修复EffectHelper中OM阶段设置RTV和UAV的部分
+- 添加`Texture2D`、`Depth2D`和`Buffer`等，便于和着色器对应
+- `Geometry::MeshData`更改为`GeometryData`，避免与`MeshData`同名
+- 具体特效会根据当前使用的Pass和输入的MeshData来获取管线需要在IA阶段绑定的信息
+- shader进行精简与部分重写
+- 修复切线变换错误的问题
+- 去除SkyRender、TextureRender等，以及`CreateWICTexture2DCubeFromFile`等函数，简化天空盒读取流程
+- 修正SSAO中shader变换投影纹理坐标错误
+- 31章起的项目会缓存编译好的着色器二进制信息，若要重新编译则删掉缓存或者设置`EffectHelper::SetBinaryCacheDirectory`
+- 后处理特效绝大部分统一使用全屏三角形渲染然后指定视口的方式
+- EffectHelper添加Dispatch方法，无需知道shader内CS线程组维度信息
+- Effect具体类的各种设置函数将不需要提供`ID3D11DeviceContext`
+- 在Win10下使用DXGI FLIP模型
+
+2022/6/6 Ver1.37.3
+
+- assimp内嵌进项目中
+- 调整TBDR项目中子视锥体的计算问题
+
+2022/5/30 Ver1.37.2
+
+- assimp的cmake编译从静态库改回动态库
+- 调整项目FXAA
+
+2022/5/27 Ver1.37.1
+
+- cmake现支持assimp，不需要额外配置，最低要求cmake 3.14 
+- 项目36-40删除VS项目文件，请使用cmake生成项目
+
+2022/5/25 Ver1.37.0
+
+- **添加项目FXAA**
+- 删除Win32(x86)项目配置
+
+2022/5/20 Ver1.36.3
+
+- 修复项目36-39
+- 调整GpuTimer
+
+2022/5/17 Ver1.36.2
+
+- 项目39添加EVSM2和EVSM4，砍掉MSAA
+- 修复Common/d3dApp.cpp的问题([#8](https://github.com/MKXJun/DirectX11-With-Windows-SDK/issues/8))
+
+2022/5/14 Ver1.36.1
+
+- 调整项目38-39代码
+
+2022/5/11 Ver1.36.0
+
+- **添加项目VSM and ESM**
+- 修改Common内的CameraController、Collison、EffectHelper
+
+2022/5/2 Ver1.35.4
+
+- 优先指定独显运行
+- 项目38使用反向Z
+- 补回.vcxproj.user
+- 前面的项目没有纹理时默认使用白色
+- 项目36之后添加DXGI翻转模型
+
+2022/4/14 Ver1.35.3
+
+- GpuTimer添加统计所有间隔平均值
+
+2022/4/13 Ver1.35.2
+
+- 添加GpuTimer和初级的ModelManager
+- 精简部分文件
+
+2022/4/9 Ver1.35.1
+
+- 修正光照一章ImGui中spotLight的问题
+
+2022/4/5 Ver1.35.0
+
+- **添加项目 Cascaded Shadow Mapping**
+- 天空盒从球体变成了立方体
+
+2022/3/21 Ver1.34.1
+
+- 36章起的项目，模型加载从tinyobjloader替换为Assimp
+- 添加Cmake配置、Assimp编译配置、自建项目教程
+
+2022/3/14 Ver1.34.0
+
+- 添加项目Tile-Based Deferred Shading
+
+2022/3/12 Ver1.33.3
+
+- 修正项目36所在颜色空间，对ImGui源码有修改
+- 项目36更名为Deferred Rendering
+- 替换Sponza模型图片以减小打包体积
+- 部分代码调整
+
+2022/3/6 Ver1.33.2
+
+- 调整项目36代码
+
+2022/3/4 v1.33.0
+
+- **添加项目 Deferred Shading Beginning**
+- 添加Common文件夹存放公共部分代码，但目前仅限36章项目使用
+- 添加stb、tiny_obj_loader到Common文件夹中
+
+2022/3/1 v1.32.5
+
+- 部分项目添加ImGui：7/10/15/16/17/20/23/30/31/32/33/34/35，默认开启
+- 所有项目的分辨率从800x600调整为1280x720
+- 调整摄像机速度
+- 调整cmake
+
+2021/11/9 v1.32.4
+- 修改cmake，删除VS2015/2017的解决方案与项目，推荐使用其它VS版本的使用cmake构建项目
+- 调整部分项目着色器名称以适配cmake
+
+2020/12/8 v1.32.3
 - 修复CreateTexture2DArrayFromFile读取问题
 - 项目17着色器代码微调
 
 2020/12/6 v1.32.2
-
 - 修复新版VS的编译器出现的C2102问题
 - 少量其余修改
 
 2020/7/19 v1.32.1
-
 - EffectHelper相关函数调整
 
 2020/7/19 v1.32.0

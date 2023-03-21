@@ -1,69 +1,108 @@
 # DirectX11 With Windows SDK教程演示项目
-[![Build status](https://ci.appveyor.com/api/projects/status/fv2f3emvusqsuj49?svg=true)](https://ci.appveyor.com/project/MKXJun/directx11-with-windows-sdk-hk9xb)[![Build status](https://ci.appveyor.com/api/projects/status/9ntk5efu2h7mkbgn?svg=true)](https://ci.appveyor.com/project/MKXJun/directx11-with-windows-sdk) [![Build status](https://ci.appveyor.com/api/projects/status/dpl8y4uea5cv0303?svg=true)](https://ci.appveyor.com/project/MKXJun/directx11-with-windows-sdk-s5k2l) ![](https://img.shields.io/badge/license-MIT-dddd00.svg) [![](https://img.shields.io/badge/Ver-1.32.3-519dd9.svg)](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/Updates/Updates.md)
 
-现代DX11系列教程：使用Windows SDK(C++)开发Direct3D 11.x
+![](https://img.shields.io/badge/license-MIT-dddd00.svg) [![](https://img.shields.io/badge/Ver-2.38.3-519dd9.svg)](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/Updates/Updates.md)
 
-## 最近更新
+**现代DX11系列教程：使用Windows SDK(C++)开发Direct3D 11.x**
 
-2020/12/8 Ver1.32.3
+![000](MarkdownFiles/000.png)
 
-- 修复CreateTexture2DArrayFromFile读取问题
-- 项目17着色器代码微调
+>  **注意：**
+>
+>  - **2.x.x和1.x.x的主要区别在于19章之后的代码有大幅修改。**
+>  - **若更新项目后渲染显示有问题，尝试删除Shaders/Cache文件夹**
+>
 
 ## 博客教程
 
-**[博客园](https://www.cnblogs.com/X-Jun/p/9028764.html)**
+- [**Github在线版（优先保证最新）**](https://mkxjun.github.io/DirectX11-With-Windows-SDK-Book) 
 
-[CSDN](https://blog.csdn.net/x_jun96/article/details/80293670)
+- **[博客园](https://www.cnblogs.com/X-Jun/p/9028764.html)**
+
+**CSDN目前停更**
 
 ## QQ群交流
 
-QQ群号：727623616
+**QQ群号：727623616**
 
-欢迎大家来交流，项目及博客有什么问题也可以在这里提出。
+欢迎大家来交流，以及项目有什么问题也可以在这里提出。
 
-## 如何运行项目
+## CMake构建项目
 
-**对于Win10系统，请根据自己当前的Visual Studio版本打开**
+### 命令行构建
 
-**对于Win7和Win8.x的系统，请选择DirectX11 With Windows SDK(2015 Win7).sln打开**
+在Win10系统下，若安装cmake的时候添加了环境变量，则可以直接运行`build_msvc.cmd`来生成项目并构建项目，完成后打开build文件夹可以找到解决方案，然后切换到Release x64就可以直接运行。
 
-建议一次性生成所有项目，比单独生成会快很多。生成完成后，若要指定运行哪个项目，需要对项目右键-设为启动项。
+### GUI构建
 
-![](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/001.png)
+使用`cmake-gui.exe`填写源码路径和构建路径，然后只需要关注下面一个变量：
 
-如遇到项目无法编译、打开的问题，[请点此处](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/How-To-Build-Solution/README.md)
+![004](MarkdownFiles/004.png)
 
-## 使用cmake构建自己的VS项目
+- `WIN_SYSTEM_SUPPORT`：默认关闭，仅Win7用户需要勾选
 
-目前用cmake构筑出来的项目布局比较精简，且着色器使用初次运行时编译。
+然后就可以点`Generate`生成项目，生成的解决方案位于build文件夹内，或者点`Open Project`打开
 
-唯一需要注意的就是Win 7系统的用户需要勾选`WIN7_SYSTEM_SUPPORT`
+## 打开教程项目
 
-## 配置表
+打开CMake生成的项目，建议切换成**Release x64**。若要指定运行哪个项目，需要对项目右键-设为启动项。然后就可以生成并运行了
 
-|IDE            |**VS2019**    |**VS2017**        |VS2015     |
-|--------------|:-------------:|:----------------:|:------------:|
-|D3DComplier版本|**47**          |**47**           |47         |
-|Windows SDK版本|**10.0 (最新安装的版本)**|**10.0.17763.0**  |10.0.14393.0        |
-|Windows开发/运行环境 |**Windows 10**|**Windows 10**|Windows 7 SP1及更高版本|
-|平台           |**x86/x64支持**      |**x86/x64支持**   |x86/x64支持|
-|配置           |**Debug/Release支持**|**Debug/Release支持**|Debug/Release支持|
+![](MarkdownFiles/001.png)
 
 > **注意：** 
->
-> 1. **教程不支持VS2013及更低版本！**
-> 2. **VS2015在安装时需要勾选VS2015 更新 3， 以及Tools(1.4.1)和Windows 10 SDK(10.0.14393)！**
-> 3. Win7系统需要安装Service Pack 1以及KB2670838补丁以支持Direct3D 11.1
-> 4. 建议安装配置表列出的VS所使用的对应版本的Windows SDK
+> 1. **目前教程仅支持VS2017(或平台工具集v141)及更高版本！**
+> 2. **由于Assimp不支持Win32(x86)，本项目仅支持64位系统**
+> 3. **Win7打开需要安装Service Pack 1以及KB2670838补丁**
+
+## 项目概况
+
+语言:</br>
+- C++17</br>
+- HLSL Shader Model 5.0
+
+目前项目使用了下述代码库或文件：
+- [ocornut/imgui](https://github.com/ocornut/imgui)：当前已经为这些项目使用ImGui：第7、10、15、16、17、20、23、30-39章。</br>
+- [nothings/stb](https://github.com/nothings/stb)：使用其stb_image</br>
+- [assimp/assimp](https://github.com/assimp/assimp)：模型加载</br>
+- [DirectXTex/DDSTextureLoader](https://github.com/Microsoft/DirectXTex/tree/master/DDSTextureLoader)</br>
+- [DirectXTex/WICTextureLoader](https://github.com/Microsoft/DirectXTex/tree/master/WICTextureLoader)</br>
+- [DirectXTex/ScreenGrab](https://github.com/Microsoft/DirectXTex/tree/master/ScreenGrab)</br>
+- [DirectXTK/Mouse(源码上有所修改)](https://github.com/Microsoft/DirectXTK/tree/master/Src)：不能和imgui同时使用</br>
+- [DirectXTK/Keyboard(源码上有所修改)](https://github.com/Microsoft/DirectXTK/tree/master/Src)：不能和imgui同时使用</br>
+
+作为教程演示项目，这里并不是以实现一个软引擎为目标。建议读者在跟随教程学习的同时要动手实践。
+
+## 打包教程示例程序
+
+以项目31的程序(Release x64)为例，其文件结构应为：
+
+```cpp
+Project 31
+|----Model/                    (挑出项目用到的模型)
+|----Texture/                  (挑出项目用到的纹理)
+|----31 Shadow Mapping/        (此处命名自由发挥，比如bin)
+     |----31 Shadow Mapping.exe
+     |----imgui.ini
+     |----assimp-vc14*-mt.dll  (从build/Assimp/bin/Release(或Debug)复制一份)
+     |----Shaders/
+```
+
+
 
 ## 支持/赞赏博主
-**博客和项目维护不易，如果本系列教程对您有所帮助，希望能够扫码支持一下博主，谢谢！**
 
-![](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/002.png)![](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/003.png)
+**博客和项目维护不易，如果本系列教程对您有所帮助，希望能够扫码支持一下博主。**
 
-## 其他
+![](MarkdownFiles/002.png)![](MarkdownFiles/003.png)
 
-[使用Direct3D 11.x(Windows SDK)编写的魔方](https://github.com/MKXJun/Rubik-Cube)
+## 使用Direct3D 11.x(Windows SDK)编写的魔方
 
-[完整更新记录](https://github.com/MKXJun/DirectX11-With-Windows-SDK/blob/master/MarkdownFiles/Updates/Updates.md)
+**[点此查看](https://github.com/MKXJun/Rubik-Cube)**
+
+## 最近更新
+
+- 2023/2/25 Ver2.38.4
+  - 修复项目32的报错问题
+  - 处理Transform获取欧拉角时的死锁问题
+  - EffectHelper类少量调整
+
+**[历史更新记录](MarkdownFiles/Updates/Updates.md)**
